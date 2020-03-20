@@ -1,0 +1,19 @@
+{
+  "name": "demed-frontend",
+  "version": "0.0.1",
+  "description": "Frontend for the demed application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WirvsVirus-DeMed/frontend.git"
+  },
+  "author": "The DeMed-Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WirvsVirus-DeMed/frontend/issues"
+  },
+  "homepage": "https://github.com/WirvsVirus-DeMed/frontend#readme"
+}
