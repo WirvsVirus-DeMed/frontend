@@ -9,6 +9,7 @@ export interface RawPacket<T> {
 export interface MedRessource {
     uuid: string;
     title: string;
+    amount: number;
     description: string;
     createdAt: Date;
     owner: PeerInformation;
@@ -22,6 +23,7 @@ export class PacketContent {
 }
 
 export interface PeerInformation { 
+    name: string;
     address: string;
     port: number;
 }

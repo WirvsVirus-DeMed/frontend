@@ -1,5 +1,15 @@
 {
     "CONNECT_TO_PEER": "Verbindung zu Peer-Netzwerk herstellen",
     "PEER_ADDRESS": "Adresse des Knotenpunktes",
-    "CONNECT": "Verbinden"
+    "CONNECT": "Verbinden",
+    "PROVIDE_RESSOURCE": "Eine Ressource anbieten",
+
+    "ADDRESSOURCE_TITLE": "Titel",
+    "ADDRESSOURCE_TITLE_PLH": "Der Titel der Ressource...",
+
+    "ADDRESSOURCE_DESCRIPTION": "Beschreibung",
+    "ADDRESSOURCE_DESCRIPTION_PLH": "Eine kleine Beschreibung dazu...",
+
+    "ADDRESSOURCE_AMOUNT": "Menge",
+    "ADDRESSOURCE_AMOUNT_PLH": "Menge..."
 }

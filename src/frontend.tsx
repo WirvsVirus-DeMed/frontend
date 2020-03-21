@@ -1,12 +1,17 @@
 import React from "react";
 import { MainComponent } from "./components/frontend";
 import ReactDOM from "react-dom";
-import { BackendConnection } from "./backendConnection";
+import { BackendConnection, ManualBackendConnection } from "./backendConnection";
 import { useHistory } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { LanguageDescription } from "./models/lang";
+import { P2PConnectionResponse, P2PConnectionRequest } from "./models/network";
 
 export const P2P_DEFAULT_PORT = 4040;
+
+export const DEBUG_VERBOSE = false;
+export const DEBUG_MANUAL_BE_CON = true;
+
 export class Frontend {
 
     backend: BackendConnection;
@@ -19,8 +24,12 @@ export class Frontend {
     constructor() {
         Frontend.frontendSingleton = this;
         this.lang = new Object() as any;
-        this.dbg = new FrontendDebugger();
-        this.backend = new BackendConnection("ws://localhost:8081");
+        this.dbg = new FrontendDebugger(this);
+
+        if(DEBUG_MANUAL_BE_CON)
+            this.backend = new ManualBackendConnection();
+        else
+            this.backend = new BackendConnection("ws://localhost:8081");
     }
 
     static getFrontend() {
@@ -63,10 +72,21 @@ export class Frontend {
     }
 } 
 
+type GetConstructorArgs<T> = T extends new (...args: infer U) => any ? U : never;
 export class FrontendDebugger {
+
+    constructor(private fe: Frontend) {}
+
+    private getBackend() {
+        return this.fe.backend as ManualBackendConnection;
+    }
 
     refresh() {
         window.location.href = "/index.html";
+    }
+
+    replyP2PConRes(connected: boolean, peerCount: number) {
+        this.getBackend().reply(new P2PConnectionResponse(connected, peerCount));
     }
 
 }

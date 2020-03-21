@@ -43,12 +43,13 @@ export class P2PConnectPage extends React.Component<{}, {
             address: inputSpl[0],
             port: inputSpl.length > 1 ? parseInt(inputSpl[1]) : P2P_DEFAULT_PORT
         };
-        let res: P2PConnectionResponse = await fe.backend.transceive(new P2PConnectionRequest(false, peerInformation));
-        if(res.connected) {
+        let res = await fe.backend.transceive(new P2PConnectionRequest(false, peerInformation));
+        let resData: P2PConnectionResponse = res.data;
+
+        if(resData.connected) {
             fe.backend.state.isConnectedToP2P = true;
             fe.redirectTo("/dashboard");
         }
-        console.log("Connecting...");
     }
 
 }

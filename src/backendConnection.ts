@@ -1,4 +1,4 @@
-import { RawPacket, PacketContent, P2PConnectionRequest } from "./models/network";
+import { RawPacket, PacketContent } from "./models/network";
 
 type OpenCallback<T> = {
     id: T;
@@ -17,16 +17,21 @@ export class BackendConnection {
     };
 
     ws: WebSocket;
-    constructor(url, private timeout = 10000) {
-        this.ws = new WebSocket(url);
-        this.ws.onmessage = (ev) => {
-            let obj = ev.data;
-            this.handleMessage(JSON.parse(obj));
-        };
+    constructor(url, private timeout = 10000, private manual = false) {
+        if(!manual) {
+            this.ws = new WebSocket(url);
+            this.ws.onmessage = (ev) => {
+                let obj = ev.data;
+                this.$handleMessage(JSON.parse(obj));
+            };
+        } else {
+            this.ws = new Object() as any;
+        }
     }
 
-    private handleMessage(msg: RawPacket<any>) {
+    public $handleMessage(msg: RawPacket<any>) {
         let throwError = false;
+        console.log(msg, this.openEventCallbacks, this.openResponsesCallbacks);
 
         if(msg.responseId) {
             let ocb = this.openResponsesCallbacks.find(c => c.id == msg.requestId);
@@ -49,7 +54,7 @@ export class BackendConnection {
             throw new Error("Package could not be handled: " + JSON.stringify(msg));
     }
 
-    async connect(url: string): Promise<void> {
+    async connect(): Promise<void> {
         if(this.ws.readyState != this.ws.OPEN) {
             return new Promise((res, rej) => {
                 let responded = false;
@@ -76,7 +81,7 @@ export class BackendConnection {
         this.ws.send(JSON.stringify(reqPkg));
     }
 
-    async transceive(data: PacketContent): Promise<any> {
+    async transceive(data: PacketContent): Promise<RawPacket<any>> {
         return new Promise((res, rej) => {
             let requestId = this.incReqId++;
             let reqPkg: RawPacket<any> = {
@@ -87,7 +92,7 @@ export class BackendConnection {
             this.openResponsesCallbacks.push({
                 id: requestId,
                 cb: (responsePkg) => {
-                    res(responsePkg);
+                    res(responsePkg.data ? responsePkg.data : responsePkg);
                 }
             })
             this.ws.send(JSON.stringify(reqPkg));
@@ -104,4 +109,47 @@ export class BackendConnection {
 
 export interface BackendState {
     isConnectedToP2P: boolean;
+}
+
+/* for debugging purposes */
+export class ManualBackendConnection extends BackendConnection {
+
+    lastRequestId: number = -1;
+    incRespId: number = 1;
+
+    constructor() {
+        super(null, 10000, true);
+        console.log("ManualBackend | Created!");
+    }
+
+    async connect() {
+        console.log("ManualBackend | Connected!");
+    }
+
+    async transceive(data: PacketContent): Promise<any> {
+        return new Promise((res, rej) => {
+            this.lastRequestId = this.incReqId++;
+            let reqPkg: RawPacket<any> = {
+                requestId: this.lastRequestId,
+                type: data.getType(),
+                data: data
+            };
+            this.openResponsesCallbacks.push({
+                id: this.lastRequestId,
+                cb: (responsePkg) => {
+                    res(responsePkg);
+                }
+            })
+            console.log("ManualBackend | " + JSON.stringify(reqPkg));
+        });
+    }
+
+    reply(data: PacketContent) {
+        this.$handleMessage({
+            requestId: this.lastRequestId,
+            responseId: this.incRespId,
+            data: data,
+            type: data.getType()
+        });
+    }
 }

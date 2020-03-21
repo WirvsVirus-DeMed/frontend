@@ -1,17 +1,20 @@
 
 import React from "react";
+import { Dashboard, CurrentDashboardModal } from "../pages/dashboard";
 
 export class Modal extends React.Component<{
-    title: string
+    title: string,
+    dashboard: Dashboard
 }> {
     
     render() {
-        return <div className="modal" tabIndex={-1} role="dialog">
+        return <div className="modal" tabIndex={-1} role="dialog" id="currentModal">
             <div className="modal-dialog" role="document">
             <div className="modal-content">
                 <div className="modal-header">
                     <h5 className="modal-title">{this.props.title}</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" className="close" data-dismiss="modal" 
+                        aria-label="Close" onClick={() => {this.selfClose()}}>
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -19,12 +22,16 @@ export class Modal extends React.Component<{
                     {this.props.children}
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-primary">Save changes</button>
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-secondary" 
+                        onClick={() => {this.selfClose()}}>Ausführen</button>
                 </div>
             </div>
             </div>
         </div>;
+    }
+
+    selfClose() {
+        this.props.dashboard.setState({modal: CurrentDashboardModal.None});
     }
 
 }
