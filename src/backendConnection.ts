@@ -1,4 +1,4 @@
-import { RawPacket, PacketContent, P2PConnectionRequest } from "../models/network";
+import { RawPacket, PacketContent, P2PConnectionRequest } from "./models/network";
 
 type OpenCallback<T> = {
     id: T;
@@ -11,6 +11,10 @@ export class BackendConnection {
 
     openResponsesCallbacks = new Array<OpenCallback<number>>();
     openEventCallbacks = new Array<OpenCallback<string>>();
+
+    state: BackendState = {
+        isConnectedToP2P: false
+    };
 
     ws: WebSocket;
     constructor(url, private timeout = 10000) {
@@ -72,7 +76,7 @@ export class BackendConnection {
         this.ws.send(JSON.stringify(reqPkg));
     }
 
-    async transceive(data: PacketContent): Promise<object> {
+    async transceive(data: PacketContent): Promise<any> {
         return new Promise((res, rej) => {
             let requestId = this.incReqId++;
             let reqPkg: RawPacket<any> = {
@@ -96,4 +100,8 @@ export class BackendConnection {
             cb: cb
         });
     }
+}
+
+export interface BackendState {
+    isConnectedToP2P: boolean;
 }

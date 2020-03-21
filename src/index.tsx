@@ -1,8 +1,11 @@
-import { Frontend } from "./components/frontend";
-import * as ReactDOM from "react-dom";
-import * as React from "react";
+import { Frontend } from "./frontend";
 
-ReactDOM.render(
-    <Frontend />,
-    document.getElementById("root")
-);
+let frontend = new Frontend();
+window["frontend"] = frontend;
+
+async function onStart() {
+    await frontend.loadLangFile("de_DE");
+    frontend.render();
+}
+
+onStart();
