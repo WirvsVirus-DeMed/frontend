@@ -79,7 +79,6 @@ export class RequestMedRessourceResponse extends PacketContent {
 export class BackendStateRequest extends PacketContent {}
 export class BackendStateResponse extends PacketContent {
     constructor(
-        public isConnectedToP2P: boolean,
         public ownItems: MedRessource[]
     ) {super()}
 }

@@ -13,7 +13,6 @@ export class BackendConnection {
     openEventCallbacks = new Array<OpenCallback<string>>();
 
     state: BackendState = {
-        isConnectedToP2P: false,
         ownItems: []
     };
 
@@ -77,7 +76,6 @@ export class BackendConnection {
         let res = await this.transceive(req);
         let resData: BackendStateResponse = res.data;
         this.state = {
-            isConnectedToP2P: resData.isConnectedToP2P,
             ownItems: resData.ownItems
         };
         return this.state;
@@ -113,7 +111,6 @@ export class BackendConnection {
 }
 
 export interface BackendState {
-    isConnectedToP2P: boolean;
     ownItems: MedRessource[];
 }
 

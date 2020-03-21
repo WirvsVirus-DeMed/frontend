@@ -93,8 +93,8 @@ export class FrontendDebugger {
         this.getBackend().reply(new ProvideMedRessourceResponse(success));
     }
 
-    replyBackendState(con, ressources) {
-        this.getBackend().reply(new BackendStateResponse(con, ressources));
+    replyBackendState(ressources) {
+        this.getBackend().reply(new BackendStateResponse(ressources));
     }
 
 }
