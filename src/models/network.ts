@@ -29,7 +29,7 @@ export interface PeerInformation {
     port: number;
 }
 
-export class P2PConnectionRequest extends PacketContent {
+/*export class P2PConnectionRequest extends PacketContent {
     constructor(
         public usePeerStorage: boolean,
         public connectToPeer?: PeerInformation
@@ -40,7 +40,7 @@ export class P2PConnectionResponse extends PacketContent {
         public connected: boolean,
         public connectedPeerCount: number
     ) {super()}
-}
+}*/
 
 export class ProvideMedRessourceRequest extends PacketContent {
     constructor(

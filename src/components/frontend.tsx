@@ -1,13 +1,8 @@
 import * as React from "react";
 import { Navigation } from "./navigation";
 import {
-    Router,
-    Switch,
-    Route,
-    Link
+    Router
   } from "react-router-dom";
-import { Frontend } from "src/frontend";
-import { P2PConnectPage } from "./pages/p2pconnect";
 import { Dashboard } from "./pages/dashboard";
 
 

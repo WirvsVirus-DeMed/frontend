@@ -2,10 +2,9 @@ import React from "react";
 import { MainComponent } from "./components/frontend";
 import ReactDOM from "react-dom";
 import { BackendConnection, ManualBackendConnection } from "./backendConnection";
-import { useHistory } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { LanguageDescription } from "./models/lang";
-import { P2PConnectionResponse, MedRessource, SearchMedRessourceResponse, ProvideMedRessourceResponse, BackendStateResponse } from "./models/network";
+import { MedRessource, SearchMedRessourceResponse, ProvideMedRessourceResponse, BackendStateResponse } from "./models/network";
 import { Dashboard } from "./components/pages/dashboard";
 
 export const P2P_DEFAULT_PORT = 4040;
@@ -84,10 +83,6 @@ export class FrontendDebugger {
 
     refresh() {
         window.location.href = "/index.html";
-    }
-
-    replyP2PConRes(connected: boolean, peerCount: number) {
-        this.getBackend().reply(new P2PConnectionResponse(connected, peerCount));
     }
 
     replySearchMedRessource(ressources: MedRessource[]) {
