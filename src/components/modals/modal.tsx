@@ -4,7 +4,8 @@ import { Dashboard, CurrentDashboardModal } from "../pages/dashboard";
 
 export class Modal extends React.Component<{
     title: string,
-    dashboard: Dashboard
+    dashboard: Dashboard,
+    footer?: JSX.Element[]
 }> {
     
     render() {
@@ -22,8 +23,7 @@ export class Modal extends React.Component<{
                     {this.props.children}
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" 
-                        onClick={() => {this.selfClose()}}>Ausführen</button>
+                    {this.props.footer}
                 </div>
             </div>
             </div>

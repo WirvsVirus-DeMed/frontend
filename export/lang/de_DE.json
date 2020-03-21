@@ -3,13 +3,25 @@
     "PEER_ADDRESS": "Adresse des Knotenpunktes",
     "CONNECT": "Verbinden",
     "PROVIDE_RESSOURCE": "Eine Ressource anbieten",
+    "SEARCH": "Suchen",
+    "SEARCH_FOR_RESSOURCE": "Eine Ressource suchen",
+    "EDIT_RESSOURCE": "Ressource bearbeiten",
+    "REMOVE_RESSOURCE": "Ressource löschen",
 
-    "ADDRESSOURCE_TITLE": "Titel",
+    "TITLE": "Titel",
     "ADDRESSOURCE_TITLE_PLH": "Der Titel der Ressource...",
 
-    "ADDRESSOURCE_DESCRIPTION": "Beschreibung",
+    "DESCRIPTION": "Beschreibung",
     "ADDRESSOURCE_DESCRIPTION_PLH": "Eine kleine Beschreibung dazu...",
 
-    "ADDRESSOURCE_AMOUNT": "Menge",
-    "ADDRESSOURCE_AMOUNT_PLH": "Menge..."
+    "AMOUNT": "Menge",
+    "ADDRESSOURCE_AMOUNT_PLH": "Menge...",
+
+    "CURRENT_OWNER": "Aktueller Besitzer",
+    "ACTIONS": "Aktionen",
+
+    "TEMPL_RESSOURCES_RESULT": "Es wurden % Element(e) gefunden.",
+    "ACTION_CANCEL": "Abbrechen",
+    "ACTION_ADD": "Hinzufügen",
+    "ACTION_EXECUTE": "Ausführen"
 }

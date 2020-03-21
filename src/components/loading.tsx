@@ -10,7 +10,7 @@ export class LoadingSpinner extends React.Component {
 
 export class BtnLoadingSpinner extends React.Component {
     render() {
-        return  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
+        return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
         </span>;
     }
 }

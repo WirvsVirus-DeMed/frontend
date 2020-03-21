@@ -1,6 +1,8 @@
 import React from "react";
 import { Frontend } from "../../frontend";
 import { AddRessourceModal } from "../modals/addRessourceModal";
+import { RessourceList } from "../ressourceList";
+import { SearchRessourceModal } from "../modals/searchRessourceModule";
 
 export class Dashboard extends React.Component<{}, {
     modal: CurrentDashboardModal
@@ -20,6 +22,15 @@ export class Dashboard extends React.Component<{}, {
             <button type="button" className="btn btn-success" onClick={() => {
                 this.showModal(CurrentDashboardModal.AddRessource);
             }}>{fe.lang.PROVIDE_RESSOURCE}</button>
+             
+            <button type="button" className="btn btn-primary" onClick={() => {
+                this.showModal(CurrentDashboardModal.SearchRessource);
+            }}>{fe.lang.SEARCH_FOR_RESSOURCE}</button>
+                
+            
+            <h5>Eigene Ressourcen</h5>
+            <RessourceList ownerIsItself={true} dashboard={this} 
+                items={[]} />
 
             {this.getCurrentModal()}
         </div>;
@@ -28,6 +39,8 @@ export class Dashboard extends React.Component<{}, {
     getCurrentModal() {
         if(this.state.modal == CurrentDashboardModal.AddRessource) {
             return <AddRessourceModal dashboard={this} />;
+        } else if(this.state.modal == CurrentDashboardModal.SearchRessource) {
+            return <SearchRessourceModal dashboard={this} />;
         }
     }
 
@@ -42,5 +55,9 @@ export class Dashboard extends React.Component<{}, {
 
 export enum CurrentDashboardModal {
     None,
-    AddRessource
+    AddRessource,
+    SearchRessource,
+    EditRessource,
+    RemoveRessource,
+    RequestRessource
 }

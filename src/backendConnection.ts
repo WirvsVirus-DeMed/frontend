@@ -31,7 +31,6 @@ export class BackendConnection {
 
     public $handleMessage(msg: RawPacket<any>) {
         let throwError = false;
-        console.log(msg, this.openEventCallbacks, this.openResponsesCallbacks);
 
         if(msg.responseId) {
             let ocb = this.openResponsesCallbacks.find(c => c.id == msg.requestId);

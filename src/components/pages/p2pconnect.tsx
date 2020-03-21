@@ -41,7 +41,8 @@ export class P2PConnectPage extends React.Component<{}, {
         let inputSpl = this.state.peerAddress.split(":");
         let peerInformation: PeerInformation = {
             address: inputSpl[0],
-            port: inputSpl.length > 1 ? parseInt(inputSpl[1]) : P2P_DEFAULT_PORT
+            port: inputSpl.length > 1 ? parseInt(inputSpl[1]) : P2P_DEFAULT_PORT,
+            name: "p2pconnect.tsx:45 -> connectBtnClick Name"
         };
         let res = await fe.backend.transceive(new P2PConnectionRequest(false, peerInformation));
         let resData: P2PConnectionResponse = res.data;
