@@ -20,20 +20,7 @@ export class MainComponent extends React.Component<{
             <Navigation />
     
             <main role="main" className="container">
-                <Switch>
-                    <Route exact path="/p2pconnect">
-                        <P2PConnectPage />
-                    </Route>
-                    <Route exact path="/dashboard">
-                        <Dashboard />
-                    </Route>
-                    <Route exact path="/">
-                        3
-                    </Route>
-                    <Route>
-                        <h3>404 - Page not found</h3>
-                    </Route>
-                </Switch>
+                <Dashboard />
             </main>
         </Router>;
     }

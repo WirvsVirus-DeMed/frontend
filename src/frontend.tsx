@@ -10,8 +10,7 @@ import { Dashboard } from "./components/pages/dashboard";
 
 export const P2P_DEFAULT_PORT = 4040;
 
-export const DEBUG_VERBOSE = false;
-export const DEBUG_MANUAL_BE_CON = true;
+export const DEBUG_MANUAL_BE_CON = false;
 
 export class Frontend {
 
@@ -31,7 +30,7 @@ export class Frontend {
         if(DEBUG_MANUAL_BE_CON)
             this.backend = new ManualBackendConnection();
         else
-            this.backend = new BackendConnection("ws://localhost:8081");
+            this.backend = new BackendConnection("ws://" + location.host + "/websocket");
     }
 
     static getFrontend() {
