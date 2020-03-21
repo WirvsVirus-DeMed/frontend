@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "outDir": "./temp",
+        "strict": true,
+        "noImplicitAny": false,
+        "lib": ["es2015", "dom"],
+        "jsx": "react",
+        "esModuleInterop": true,
+        "inlineSourceMap": true,
+        "baseUrl": ".",
+        "removeComments": true,
+        "allowJs": false
+    },
+    "include": [
+        "./**/*.ts", 
+        "./**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules", 
+        "./**/*.d.ts", 
+        "./**/*.js"
+    ]
+}
