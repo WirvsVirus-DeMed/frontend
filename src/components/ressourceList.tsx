@@ -21,7 +21,6 @@ export class RessourceList extends React.Component<{
     render() {
         let fe = Frontend.getFrontend();
 
-        console.log(this.props);
         return <table className="table table-sm">
             <thead>
                 <tr>
@@ -50,8 +49,8 @@ export class RessourceList extends React.Component<{
             {!this.props.ownerIsItself ? <td>{item.owner.name}</td> : null}
             <td>{
                 this.props.ownerIsItself ? [
-                    this.editRessourceButton(),
-                    this.deleteRessourceButton()
+                    this.editRessourceButton(item),
+                    this.deleteRessourceButton(item)
                 ] : [
 
                 ]
@@ -59,17 +58,17 @@ export class RessourceList extends React.Component<{
         </tr>;
     }
 
-    editRessourceButton() {
+    editRessourceButton(item: MedRessource) {
         let fe = Frontend.getFrontend();
         return <button key="edbtn" type="button" className="btn btn-primary btn-xs" onClick={() => {
-            this.props.dashboard.showModal(CurrentDashboardModal.EditRessource);
+            this.props.dashboard.showModal(CurrentDashboardModal.EditRessource, item);
         }}>{fe.lang.ACTION_EDIT}</button>;
     }
 
-    deleteRessourceButton() {
+    deleteRessourceButton(item: MedRessource) {
         let fe = Frontend.getFrontend();
         return <button key="delbtn" type="button" className="btn btn-primary btn-xs" onClick={() => {
-            this.props.dashboard.showModal(CurrentDashboardModal.RemoveRessource);
+            this.props.dashboard.showModal(CurrentDashboardModal.RemoveRessource, item);
         }}>{fe.lang.ACTION_REMOVE}</button>;
     }
 

@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { LanguageDescription } from "./models/lang";
 import { P2PConnectionResponse, MedRessource, SearchMedRessourceResponse, ProvideMedRessourceResponse, BackendStateResponse } from "./models/network";
+import { Dashboard } from "./components/pages/dashboard";
 
 export const P2P_DEFAULT_PORT = 4040;
 
@@ -16,6 +17,7 @@ export class Frontend {
 
     backend: BackendConnection;
     dbg: FrontendDebugger;
+    dashboard?: Dashboard;
 
     history = createBrowserHistory();
     element = <MainComponent history={this.history} />;

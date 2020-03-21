@@ -2,15 +2,27 @@ import React from "react";
 import { Frontend } from "../../frontend";
 import { AddRessourceModal } from "../modals/addRessourceModal";
 import { RessourceList } from "../ressourceList";
-import { SearchRessourceModal } from "../modals/searchRessourceModule";
+import { SearchRessourceModal } from "../modals/searchRessourceModal";
+import { RemoveRessourceModal } from "../modals/removeRessourceModal";
+import { MedRessource, PeerInformation } from "../../models/network";
+import { NotificationComponent } from "../notifications/notification";
+import { MedRequestNotification } from "../notifications/medRequestNotification";
 
 export class Dashboard extends React.Component<{}, {
-    modal: CurrentDashboardModal
+    modal: CurrentDashboardModal,
+    selectedRessource?: MedRessource,
+    openNotifications: JSX.Element[]
 }> {
 
     constructor(props) {
         super(props);
-        this.state = { modal: CurrentDashboardModal.None };
+        this.state = { 
+            modal: CurrentDashboardModal.None,
+            openNotifications: []
+        };
+        
+        let fe = Frontend.getFrontend();
+        fe.dashboard = this;
     }
 
     render() {
@@ -26,13 +38,16 @@ export class Dashboard extends React.Component<{}, {
             <button type="button" className="btn btn-primary" onClick={() => {
                 this.showModal(CurrentDashboardModal.SearchRessource);
             }}>{fe.lang.SEARCH_FOR_RESSOURCE}</button>
-                
             
             <h5>Eigene Ressourcen</h5>
             <RessourceList ownerIsItself={true} dashboard={this} 
                 items={fe.backend.state.ownItems} />
 
             {this.getCurrentModal()}
+
+            <div className="notification-container">
+                {this.state.openNotifications}
+            </div>
         </div>;
     }
 
@@ -41,14 +56,33 @@ export class Dashboard extends React.Component<{}, {
             return <AddRessourceModal dashboard={this} />;
         } else if(this.state.modal == CurrentDashboardModal.SearchRessource) {
             return <SearchRessourceModal dashboard={this} />;
+        } else if(this.state.modal == CurrentDashboardModal.RemoveRessource) {
+            return <RemoveRessourceModal dashboard={this} ressource={this.state.selectedRessource!} />;
+        } else if(this.state.modal == CurrentDashboardModal.EditRessource) {
+            return <AddRessourceModal dashboard={this} existingItem={this.state.selectedRessource} />;
         }
     }
 
-    showModal(modal: CurrentDashboardModal) {
-        this.setState({ modal });
-        /*setTimeout(() => {
-            $("#currentModal").modal("show");
-        }, 10);*/
+    showModal(modal: CurrentDashboardModal, ressource?: MedRessource) {
+        this.setState({ modal, selectedRessource: ressource });
+    }
+
+    private notificationIncId = 0;
+    
+    /*simpleNotification(title: string, message: string) {
+        this.addNotification(<NotificationComponent key={this.notificationIncId++} 
+            title={title} dashboard={this}>{message}</NotificationComponent>);
+    }*/
+    /*addMedRequestNotification(mr: MedRessource, s: PeerInformation) {
+        this.addNotification(<MedRequestNotification 
+            ressource={mr} sender={s} dashboard={this} 
+            key={this.notificationIncId++} />);
+    }*/
+
+    addNotification(newNotfEl: JSX.Element) {
+        this.setState({
+            openNotifications: [...this.state.openNotifications, newNotfEl]
+        });
     }
 
 }

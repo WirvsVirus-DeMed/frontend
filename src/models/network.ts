@@ -92,3 +92,15 @@ export class ChangeMedRessourceRequest extends PacketContent {
     ) {super()}
 }
 export class ChangeMedRessourceResponse extends PacketContent {}
+
+export class IncommingMedRessourceRequest extends PacketContent {
+    constructor(
+        public ressource: MedRessource
+    ) {super()}
+}
+export class IncommingMedRessourceResponse extends PacketContent {
+    constructor(
+        public accepted: boolean,
+        public additionalInformation: string
+    ) {super()}
+}

@@ -2,11 +2,12 @@ import React from "react";
 import { Modal } from "./modal";
 import { Frontend } from "../../frontend";
 import { Dashboard, CurrentDashboardModal } from "../pages/dashboard";
-import { MedRessource, ProvideMedRessourceRequest, ProvideMedRessourceResponse } from "../../models/network";
+import { MedRessource, ProvideMedRessourceRequest, ProvideMedRessourceResponse, ChangeMedRessourceRequest, ChangeMedRessourceResponse } from "../../models/network";
 import { BtnLoadingSpinner } from "../loading";
 
 export class AddRessourceModal extends React.Component<{
-    dashboard: Dashboard
+    dashboard: Dashboard,
+    existingItem?: MedRessource
 }, {
     ressource_title: string,
     ressource_amount: number,
@@ -17,27 +18,40 @@ export class AddRessourceModal extends React.Component<{
 
     constructor(props) {
         super(props);
-        this.state = { 
-            isInserting: false,
-            ressource_amount: -1,
-            ressource_pzn: -1,
-            ressource_title: "",
-            ressource_description: ""
-        };
+
+        if(!this.props.existingItem)
+            this.state = { 
+                isInserting: false,
+                ressource_amount: -1,
+                ressource_pzn: -1,
+                ressource_title: "",
+                ressource_description: ""
+            };
+        else {
+            let i = this.props.existingItem;
+            this.state = {
+                isInserting: false,
+                ressource_amount: i.amount,
+                ressource_description: i.description,
+                ressource_pzn: i.pzn,
+                ressource_title: i.title
+            };
+        }
     }
 
     render() {
         let fe = Frontend.getFrontend();
 
         return <Modal dashboard={this.props.dashboard} 
-            title={fe.lang.PROVIDE_RESSOURCE} footer={this.renderFooter()}>
+            title={this.props.existingItem ? fe.lang.EDIT_RESSOURCE : fe.lang.PROVIDE_RESSOURCE} footer={this.renderFooter()}>
             <form>
                 <div className="form-group row">
                     <label className="col-sm-3 col-form-label">{fe.lang.TITLE}</label>
                     <div className="col-sm-9">
                         <input type="text" className="form-control" disabled={this.state.isInserting}
                             id="inputTitle" placeholder={fe.lang.ADDRESSOURCE_TITLE_PLH} 
-                            onChange={(evt) => {this.setState({ ressource_title: evt.target.value })}}/>
+                            onChange={(evt) => {this.setState({ ressource_title: evt.target.value })}}
+                            value={this.props.existingItem?.title} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -45,7 +59,8 @@ export class AddRessourceModal extends React.Component<{
                     <div className="col-sm-4">
                         <input type="number" className="form-control" disabled={this.state.isInserting}
                             id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_AMOUNT_PLH}
-                            onChange={(evt) => {this.setState({ ressource_amount: parseInt(evt.target.value) })}}/>
+                            onChange={(evt) => {this.setState({ ressource_amount: parseInt(evt.target.value) })}}
+                            value={this.props.existingItem?.amount} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -53,7 +68,8 @@ export class AddRessourceModal extends React.Component<{
                     <div className="col-sm-4">
                         <input type="text" className="form-control" disabled={this.state.isInserting}
                             id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_PZN_PLH}
-                            onChange={(evt) => {this.setState({ ressource_pzn: parseInt(evt.target.value) })}}/>
+                            onChange={(evt) => {this.setState({ ressource_pzn: parseInt(evt.target.value) })}}
+                            value={this.props.existingItem?.pzn} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -61,7 +77,8 @@ export class AddRessourceModal extends React.Component<{
                     <div className="col-sm-9">
                         <textarea className="form-control" rows={6} disabled={this.state.isInserting}
                             id="inputDescription" placeholder={fe.lang.ADDRESSOURCE_DESCRIPTION_PLH} 
-                            onChange={(evt) => {this.setState({ ressource_description: evt.target.value })}}/>
+                            onChange={(evt) => {this.setState({ ressource_description: evt.target.value })}}
+                            value={this.props.existingItem?.description} />
                     </div>
                 </div>
             </form>
@@ -74,7 +91,7 @@ export class AddRessourceModal extends React.Component<{
         return [
             <button type="button" className="btn btn-success" disabled={this.state.isInserting}
             onClick={() => {
-                this.onInsert();
+                this.onSubmitClick();
             }} key="modFtBtn1">{fe.lang.ACTION_ADD} {this.state.isInserting ? <BtnLoadingSpinner /> : ""}</button>,
             <button type="button" className="btn btn-secondary" disabled={this.state.isInserting}
             onClick={() => {
@@ -83,7 +100,7 @@ export class AddRessourceModal extends React.Component<{
         ]
     }
 
-    async onInsert() {
+    async onSubmitClick() {
         let newMedRessource: MedRessource = {
             amount: this.state.ressource_amount,
             createdAt: new Date(),
@@ -94,13 +111,24 @@ export class AddRessourceModal extends React.Component<{
             pzn: this.state.ressource_pzn
         };
 
-        this.setState({ isInserting: true });
-        
         let fe = Frontend.getFrontend();
-        let req = new ProvideMedRessourceRequest(newMedRessource);
-        let res = await fe.backend.transceive(req);
-        let resData: ProvideMedRessourceResponse = res.data;
 
+        this.setState({ isInserting: true });
+        if(!this.props.existingItem) {
+
+            let req = new ProvideMedRessourceRequest(newMedRessource);
+            let res = await fe.backend.transceive(req);
+            let resData: ProvideMedRessourceResponse = res.data;
+
+        } else {
+
+            newMedRessource.createdAt = this.props.existingItem.createdAt;
+            let req = new ChangeMedRessourceRequest(this.props.existingItem.uuid, false, newMedRessource);
+            let res = await fe.backend.transceive(req);
+            let resData: ChangeMedRessourceResponse = res.data;
+
+        }
+        
         // resData.success
         this.setState({ isInserting: false });
         

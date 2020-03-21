@@ -29,6 +29,13 @@
     "ACTION_EXECUTE": "Ausführen",
     "ACTION_EDIT": "Bearbeiten",
     "ACTION_REMOVE": "Entfernen",
+    "ACTION_ALLOW": "Erlauben",
+    "ACTION_DENY": "Ablehnen",
 
-    "REMOVE_RESSOURCE_QUESTION": "Soll das Medikament % wirklich gelöscht werden?"
+    "REMOVE_RESSOURCE_QUESTION_LEFT": "Soll das Medikament ",
+    "REMOVE_RESSOURCE_QUESTION_RIGHT": " wirklich gelöscht werden?",
+
+    "NOTIFICATION_MEDREQ_TITLE": "Medikamentenanfrage",
+    "NOTIFICATION_MEDREQ_DESCR": "Folgendes Medikament wurde soeben angefragt:",
+    "NOTIFICATION_MEDREQ_QUEST": "Möchten Sie dem zustimmen und Kontaktdetails austauschen?"
 }

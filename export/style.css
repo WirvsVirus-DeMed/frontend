@@ -46,3 +46,13 @@ button.btn-xs {
     line-height: 1.5;
     border-radius: 3px;
 }
+
+.toast {
+    opacity: 1;
+}
+
+.notification-container {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+}
