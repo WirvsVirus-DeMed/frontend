@@ -129,7 +129,6 @@ export class AddRessourceModal extends React.Component<{
 
         }
         
-        // resData.success
         this.setState({ isInserting: false });
         
         this.props.dashboard.showModal(CurrentDashboardModal.None);
