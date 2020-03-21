@@ -1,0 +1,41 @@
+{
+    "CONNECT_TO_PEER": "Connect to peer-network",
+    "PEER_ADDRESS": "Address to connect with",
+    "CONNECT": "Connect",
+    "PROVIDE_RESSOURCE": "Provide a ressource",
+    "SEARCH": "Search",
+    "SEARCH_FOR_RESSOURCE": "Search for a ressource",
+    "EDIT_RESSOURCE": "Edit a ressource",
+    "REMOVE_RESSOURCE": "Remove a ressource",
+
+    "TITLE": "Tittle",
+    "ADDRESSOURCE_TITLE_PLH": "The title of the resource...",
+
+    "DESCRIPTION": "Description",
+    "ADDRESSOURCE_DESCRIPTION_PLH": "(optional) a short description...",
+
+    "AMOUNT": "Amount",
+    "ADDRESSOURCE_AMOUNT_PLH": "Amount...",
+
+    "CURRENT_OWNER": "Current owner",
+    "ACTIONS": "Actions",
+
+    "PZN": "PZN",
+    "ADDRESSOURCE_PZN_PLH": "Unique PZN...",
+
+    "TEMPL_RESSOURCES_RESULT": "% element(s) were found.",
+    "ACTION_CANCEL": "Cancel",
+    "ACTION_ADD": "Add",
+    "ACTION_EXECUTE": "Execute",
+    "ACTION_EDIT": "Edit",
+    "ACTION_REMOVE": "Remove",
+    "ACTION_ALLOW": "Allow",
+    "ACTION_DENY": "Deny",
+
+    "REMOVE_RESSOURCE_QUESTION_LEFT": "Should the ressource ",
+    "REMOVE_RESSOURCE_QUESTION_RIGHT": " really be deleted?",
+
+    "NOTIFICATION_MEDREQ_TITLE": "Medicine request",
+    "NOTIFICATION_MEDREQ_DESCR": "The following ressource has just been requested:",
+    "NOTIFICATION_MEDREQ_QUEST": "Do you want to agree to this and exchange contact details?"
+}
