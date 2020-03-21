@@ -1,9 +1,11 @@
 
-export interface RawPacket<T> {
+
+export type Packet<T> = PacketHeader & T;
+
+export interface PacketHeader {
     requestId?: number;
     responseId?: number;
     type: string;
-    data: T;
 }
 
 export interface MedRessource {
@@ -16,12 +18,11 @@ export interface MedRessource {
     owner: PeerInformation;
 }
 
-export class PacketContent {
-
+/*export class PacketContent {
     getType(): string {
         return this.constructor.name;
     }
-}
+}*/
 
 export interface PeerInformation { 
     name: string;
@@ -29,77 +30,103 @@ export interface PeerInformation {
     port: number;
 }
 
-/*export class P2PConnectionRequest extends PacketContent {
-    constructor(
-        public usePeerStorage: boolean,
-        public connectToPeer?: PeerInformation
-    ) {super()}
-}
-export class P2PConnectionResponse extends PacketContent {
-    constructor(
-        public connected: boolean,
-        public connectedPeerCount: number
-    ) {super()}
-}*/
 
-export class ProvideMedRessourceRequest extends PacketContent {
+export class ProvideMedRessourceRequest implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "ProvideMedRessourceRequest";
     constructor(
         public ressource: MedRessource
-    ) {super()}
+    ) {}
 }
-export class ProvideMedRessourceResponse extends PacketContent {
+export class ProvideMedRessourceResponse implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "ProvideMedRessourceResponse";
     constructor(
         public success: boolean
-    ) {super()}
+    ) {}
 }
 
-export class SearchMedRessourceRequest extends PacketContent {
+export class SearchMedRessourceRequest implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "SearchMedRessourceRequest";
     constructor(
         public keywords: string[]
-    ) {super()}
+    ) {}
 }
-export class SearchMedRessourceResponse extends PacketContent {
+export class SearchMedRessourceResponse implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "SearchMedRessourceResponse";
     constructor(
         public ressources: MedRessource[]
-    ) {super()}
+    ) {}
 }
 
-export class RequestMedRessourceRequest extends PacketContent {
+export class RequestMedRessourceRequest implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "RequestMedRessourceRequest";
     constructor(
         public ressourceUuid: string
-    ) {super()}
+    ) {}
 }
-export class RequestMedRessourceResponse extends PacketContent {
+export class RequestMedRessourceResponse implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "RequestMedRessourceResponse";
     constructor(
         public accepted: boolean,
         public additionalInformation: string
-    ) {super()}
+    ) {}
 }
 
-export class BackendStateRequest extends PacketContent {}
-export class BackendStateResponse extends PacketContent {
+export class BackendStateRequest implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "BackendStateRequest";
+}
+export class BackendStateResponse implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "BackendStateResponse";
     constructor(
         public ownItems: MedRessource[]
-    ) {super()}
+    ) {}
 }
 
-export class ChangeMedRessourceRequest extends PacketContent {
+export class ChangeMedRessourceRequest implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "ChangeMedRessourceRequest";
     constructor(
         public ressourceUuid: string,
         public remove: boolean,
         public editedRessource?: MedRessource
-    ) {super()}
+    ) {}
 }
-export class ChangeMedRessourceResponse extends PacketContent {}
+export class ChangeMedRessourceResponse implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "ChangeMedRessourceResponse";
+}
 
-export class IncommingMedRessourceRequest extends PacketContent {
+export class IncommingMedRessourceRequest implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "IncommingMedRessourceRequest";
     constructor(
         public ressource: MedRessource
-    ) {super()}
+    ) {}
 }
-export class IncommingMedRessourceResponse extends PacketContent {
+export class IncommingMedRessourceResponse implements PacketHeader {
+    requestId?: number | undefined;
+    responseId?: number | undefined;
+    type = "IncommingMedRessourceResponse";
     constructor(
         public accepted: boolean,
         public additionalInformation: string
-    ) {super()}
+    ) {}
 }

@@ -117,15 +117,13 @@ export class AddRessourceModal extends React.Component<{
         if(!this.props.existingItem) {
 
             let req = new ProvideMedRessourceRequest(newMedRessource);
-            let res = await fe.backend.transceive(req);
-            let resData: ProvideMedRessourceResponse = res.data;
-
+            let res = await fe.backend.transceive<ProvideMedRessourceResponse>(req);
+            
         } else {
 
             newMedRessource.createdAt = this.props.existingItem.createdAt;
             let req = new ChangeMedRessourceRequest(this.props.existingItem.uuid, false, newMedRessource);
-            let res = await fe.backend.transceive(req);
-            let resData: ChangeMedRessourceResponse = res.data;
+            let res = await fe.backend.transceive<ChangeMedRessourceResponse>(req);
 
         }
         

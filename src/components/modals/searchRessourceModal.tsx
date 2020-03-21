@@ -60,13 +60,12 @@ export class SearchRessourceModal extends React.Component<{
 
         this.setState({ isRequesting: true });
         let req = new SearchMedRessourceRequest(this.state.currentInput.split(" "));
-        let res = await fe.backend.transceive(req);
-        let resData: SearchMedRessourceResponse = res.data;
-
+        let res = await fe.backend.transceive<SearchMedRessourceResponse>(req);
+        
         this.setState({ 
-            items: resData.ressources, 
+            items: res.ressources, 
             isRequesting: false,
-            resultCount: resData.ressources.length
+            resultCount: res.ressources.length
         }); 
     }
 }

@@ -1,8 +1,8 @@
-import { RawPacket, PacketContent, MedRessource, BackendStateRequest, BackendStateResponse } from "./models/network";
+import { PacketHeader, MedRessource, BackendStateRequest, BackendStateResponse, Packet } from "./models/network";
 
 type OpenCallback<T> = {
     id: T;
-    cb: (pkg: RawPacket<any>) => void;
+    cb: (pkg: PacketHeader) => void;
 }
 
 export class BackendConnection {
@@ -30,7 +30,7 @@ export class BackendConnection {
         }
     }
 
-    public $handleMessage(msg: RawPacket<any>) {
+    public $handleMessage(msg: PacketHeader) {
         let throwError = false;
 
         if(msg.responseId) {
@@ -73,27 +73,24 @@ export class BackendConnection {
 
     async updateState() {
         let req = new BackendStateRequest();
-        let res = await this.transceive(req);
-        let resData: BackendStateResponse = res.data;
+        let res = await this.transceive<BackendStateResponse>(req);
         this.state = {
-            ownItems: resData.ownItems
+            ownItems: res.ownItems
         };
         return this.state;
     }
 
-    async transceive(data: PacketContent): Promise<RawPacket<any>> {
+    async transceive<RES>(data: PacketHeader): Promise<Packet<RES>> {
         return new Promise((res, rej) => {
             let requestId = this.incReqId++;
-            let reqPkg: RawPacket<any> = {
-                requestId,
-                responseId: -1,
-                type: data.getType(),
-                data: data
-            };
+            let reqPkg: PacketHeader = data;
+            reqPkg.requestId = requestId;
+            reqPkg.responseId = -1;
+            
             this.openResponsesCallbacks.push({
                 id: requestId,
                 cb: (responsePkg) => {
-                    res(responsePkg.data ? responsePkg.data : responsePkg);
+                    res(responsePkg as any);
                 }
             })
             this.ws.send(JSON.stringify(reqPkg));
@@ -102,7 +99,7 @@ export class BackendConnection {
         });
     }
 
-    handleEvent<U, T extends { new (...args: any[]): U }>(typeObj: T, cb: (pkg: RawPacket<any>) => void) {
+    handleEvent<U, T extends { new (...args: any[]): U }>(typeObj: T, cb: (pkg: PacketHeader) => void) {
         this.openEventCallbacks.push({
             id: typeObj.name,
             cb: cb
@@ -129,30 +126,27 @@ export class ManualBackendConnection extends BackendConnection {
         console.log("ManualBackend | Connected!");
     }
 
-    async transceive(data: PacketContent): Promise<any> {
+    async transceive(data: any): Promise<any> {
         return new Promise((res, rej) => {
             this.lastRequestId = this.incReqId++;
-            let reqPkg: RawPacket<any> = {
-                requestId: this.lastRequestId,
-                type: data.getType(),
-                data: data
-            };
+            let reqPkg: PacketHeader = data;
+            reqPkg.requestId = this.lastRequestId;
+            reqPkg.responseId = -1;
+            
             this.openResponsesCallbacks.push({
                 id: this.lastRequestId,
                 cb: (responsePkg) => {
-                    res(responsePkg);
+                    res(responsePkg as any);
                 }
             })
             console.log("ManualBackend | " + JSON.stringify(reqPkg));
         });
     }
 
-    reply(data: PacketContent) {
-        this.$handleMessage({
-            requestId: this.lastRequestId,
-            responseId: this.incRespId,
-            data: data,
-            type: data.getType()
-        });
+    reply(data: Packet<unknown>) {
+        data.requestId = this.lastRequestId;
+        data.responseId = this.incRespId;
+
+        this.$handleMessage(data);
     }
 }
