@@ -23,6 +23,7 @@ export class BackendConnection {
             this.ws = new WebSocket(url);
             this.ws.onmessage = (ev) => {
                 let obj = ev.data;
+                console.log("Back->Front", obj);
                 this.$handleMessage(JSON.parse(obj));
             };
         } else {
@@ -71,16 +72,6 @@ export class BackendConnection {
         }
     }
 
-    sendPacket(data: PacketContent): void {
-        let requestId = this.incReqId++;
-        let reqPkg: RawPacket<any> = {
-            requestId,
-            type: data.getType(),
-            data: data
-        };
-        this.ws.send(JSON.stringify(reqPkg));
-    }
-
     async updateState() {
         let req = new BackendStateRequest();
         let res = await this.transceive(req);
@@ -108,6 +99,8 @@ export class BackendConnection {
                 }
             })
             this.ws.send(JSON.stringify(reqPkg));
+
+            console.log("Front->Back", reqPkg);
         });
     }
 
