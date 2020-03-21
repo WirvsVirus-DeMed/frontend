@@ -97,6 +97,7 @@ export class BackendConnection {
             let requestId = this.incReqId++;
             let reqPkg: RawPacket<any> = {
                 requestId,
+                responseId: -1,
                 type: data.getType(),
                 data: data
             };
