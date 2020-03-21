@@ -18,6 +18,9 @@ export interface LanguageDescription {
     AMOUNT: string;
     ADDRESSOURCE_AMOUNT_PLH: string;
 
+    PZN: string;
+    ADDRESSOURCE_PZN_PLH: string;
+
     CURRENT_OWNER: string;
     ACTIONS: string;
     SEARCH_FOR_RESSOURCE: string;
@@ -26,4 +29,9 @@ export interface LanguageDescription {
     ACTION_CANCEL: string;
     ACTION_ADD: string;
     ACTION_EXECUTE: string;
+    ACTION_EDIT: string;
+    ACTION_REMOVE: string;
+
+    REMOVE_RESSOURCE_QUESTION: string;
+
 }

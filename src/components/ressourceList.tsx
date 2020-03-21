@@ -7,25 +7,25 @@ export class RessourceList extends React.Component<{
     ownerIsItself: boolean,
     dashboard: Dashboard,
     items: MedRessource[]
-}, {
-    items: MedRessource[]
 }> {
 
     constructor(props) {
         super(props);
-        this.state = { items: new Array() };
+        //this.state = { items: new Array() };
     }
 
-    componentWillReceiveProps(props) {
+    /*UNSAFE_componentWillReceiveProps(props) {
         this.setState({ items: props.items });
-    }
+    }*/
 
     render() {
         let fe = Frontend.getFrontend();
 
-        return <table className="table">
+        console.log(this.props);
+        return <table className="table table-sm">
             <thead>
                 <tr>
+                    <th scope="col">{fe.lang.PZN}</th>
                     <th scope="col">{fe.lang.TITLE}</th>
                     <th scope="col">{fe.lang.AMOUNT}</th>
                     <th scope="col">{fe.lang.DESCRIPTION}</th>
@@ -34,7 +34,7 @@ export class RessourceList extends React.Component<{
                 </tr>
                 </thead>
                 <tbody>
-                    {this.state.items.map(item => {
+                    {this.props.items.map(item => {
                         return this.ressourceTableRow(item);
                     })}
                 </tbody>
@@ -43,13 +43,15 @@ export class RessourceList extends React.Component<{
 
     ressourceTableRow(item: MedRessource) {
         return <tr key={item.uuid}>
+            <td scope="row">{item.pzn ?? "---"}</td>
             <td>{item.title}</td>
             <td>{item.amount}</td>
             <td>{item.description.substr(0, 100)}</td>
             {!this.props.ownerIsItself ? <td>{item.owner.name}</td> : null}
             <td>{
                 this.props.ownerIsItself ? [
-                    this.editRessourceButton()
+                    this.editRessourceButton(),
+                    this.deleteRessourceButton()
                 ] : [
 
                 ]
@@ -59,16 +61,21 @@ export class RessourceList extends React.Component<{
 
     editRessourceButton() {
         let fe = Frontend.getFrontend();
-        return <button type="button" className="btn btn-primary" onClick={() => {
+        return <button key="edbtn" type="button" className="btn btn-primary btn-xs" onClick={() => {
             this.props.dashboard.showModal(CurrentDashboardModal.EditRessource);
-        }}>{fe.lang.EDIT_RESSOURCE}</button>;
+        }}>{fe.lang.ACTION_EDIT}</button>;
     }
 
     deleteRessourceButton() {
         let fe = Frontend.getFrontend();
-        return <button type="button" className="btn btn-primary" onClick={() => {
+        return <button key="delbtn" type="button" className="btn btn-primary btn-xs" onClick={() => {
             this.props.dashboard.showModal(CurrentDashboardModal.RemoveRessource);
-        }}>{fe.lang.REMOVE_RESSOURCE}</button>;
+        }}>{fe.lang.ACTION_REMOVE}</button>;
     }
+
+    /*requestRessourceButton() {
+        let fe = Frontend.getFrontend();
+        return <button key="reqbtn" type="button"></button>
+    }*/
     
 }

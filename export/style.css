@@ -39,3 +39,10 @@ h5 {
 button {
     margin-right: 0.3em;
 }
+
+button.btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}

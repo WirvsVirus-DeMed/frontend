@@ -5,7 +5,7 @@ import { BackendConnection, ManualBackendConnection } from "./backendConnection"
 import { useHistory } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { LanguageDescription } from "./models/lang";
-import { P2PConnectionResponse, MedRessource, SearchMedRessourceResponse, ProvideMedRessourceResponse } from "./models/network";
+import { P2PConnectionResponse, MedRessource, SearchMedRessourceResponse, ProvideMedRessourceResponse, BackendStateResponse } from "./models/network";
 
 export const P2P_DEFAULT_PORT = 4040;
 
@@ -95,6 +95,10 @@ export class FrontendDebugger {
 
     replyAddMedRessource(success: boolean) {
         this.getBackend().reply(new ProvideMedRessourceResponse(success));
+    }
+
+    replyBackendState(con, ressources) {
+        this.getBackend().reply(new BackendStateResponse(con, ressources));
     }
 
 }

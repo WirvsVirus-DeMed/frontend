@@ -12,7 +12,7 @@
     "ADDRESSOURCE_TITLE_PLH": "Der Titel der Ressource...",
 
     "DESCRIPTION": "Beschreibung",
-    "ADDRESSOURCE_DESCRIPTION_PLH": "Eine kleine Beschreibung dazu...",
+    "ADDRESSOURCE_DESCRIPTION_PLH": "(optional) eine kleine Beschreibung dazu...",
 
     "AMOUNT": "Menge",
     "ADDRESSOURCE_AMOUNT_PLH": "Menge...",
@@ -20,8 +20,15 @@
     "CURRENT_OWNER": "Aktueller Besitzer",
     "ACTIONS": "Aktionen",
 
+    "PZN": "PZN",
+    "ADDRESSOURCE_PZN_PLH": "Eindeutige PZN...",
+
     "TEMPL_RESSOURCES_RESULT": "Es wurden % Element(e) gefunden.",
     "ACTION_CANCEL": "Abbrechen",
     "ACTION_ADD": "Hinzufügen",
-    "ACTION_EXECUTE": "Ausführen"
+    "ACTION_EXECUTE": "Ausführen",
+    "ACTION_EDIT": "Bearbeiten",
+    "ACTION_REMOVE": "Entfernen",
+
+    "REMOVE_RESSOURCE_QUESTION": "Soll das Medikament % wirklich gelöscht werden?"
 }

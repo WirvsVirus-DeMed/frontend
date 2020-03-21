@@ -30,7 +30,7 @@ export class Dashboard extends React.Component<{}, {
             
             <h5>Eigene Ressourcen</h5>
             <RessourceList ownerIsItself={true} dashboard={this} 
-                items={[]} />
+                items={fe.backend.state.ownItems} />
 
             {this.getCurrentModal()}
         </div>;

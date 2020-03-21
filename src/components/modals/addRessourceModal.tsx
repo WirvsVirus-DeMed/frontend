@@ -10,6 +10,7 @@ export class AddRessourceModal extends React.Component<{
 }, {
     ressource_title: string,
     ressource_amount: number,
+    ressource_pzn: number,
     ressource_description: string,
     isInserting: boolean
 }> {
@@ -19,6 +20,7 @@ export class AddRessourceModal extends React.Component<{
         this.state = { 
             isInserting: false,
             ressource_amount: -1,
+            ressource_pzn: -1,
             ressource_title: "",
             ressource_description: ""
         };
@@ -44,6 +46,14 @@ export class AddRessourceModal extends React.Component<{
                         <input type="number" className="form-control" disabled={this.state.isInserting}
                             id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_AMOUNT_PLH}
                             onChange={(evt) => {this.setState({ ressource_amount: parseInt(evt.target.value) })}}/>
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">{fe.lang.PZN}</label>
+                    <div className="col-sm-4">
+                        <input type="text" className="form-control" disabled={this.state.isInserting}
+                            id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_PZN_PLH}
+                            onChange={(evt) => {this.setState({ ressource_pzn: parseInt(evt.target.value) })}}/>
                     </div>
                 </div>
                 <div className="form-group row">
@@ -80,7 +90,8 @@ export class AddRessourceModal extends React.Component<{
             description: this.state.ressource_description,
             owner: null as any,
             title: this.state.ressource_title,
-            uuid: uuidv4()
+            uuid: uuidv4(),
+            pzn: this.state.ressource_pzn
         };
 
         this.setState({ isInserting: true });

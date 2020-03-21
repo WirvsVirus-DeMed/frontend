@@ -10,6 +10,7 @@ export interface MedRessource {
     uuid: string;
     title: string;
     amount: number;
+    pzn: number;
     description: string;
     createdAt: Date;
     owner: PeerInformation;
@@ -74,3 +75,20 @@ export class RequestMedRessourceResponse extends PacketContent {
         public additionalInformation: string
     ) {super()}
 }
+
+export class BackendStateRequest extends PacketContent {}
+export class BackendStateResponse extends PacketContent {
+    constructor(
+        public isConnectedToP2P: boolean,
+        public ownItems: MedRessource[]
+    ) {super()}
+}
+
+export class ChangeMedRessourceRequest extends PacketContent {
+    constructor(
+        public ressourceUuid: string,
+        public remove: boolean,
+        public editedRessource?: MedRessource
+    ) {super()}
+}
+export class ChangeMedRessourceResponse extends PacketContent {}
