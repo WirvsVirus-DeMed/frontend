@@ -1,4 +1,5 @@
 import { PacketHeader, MedRessource, BackendStateRequest, BackendStateResponse, Packet } from "./models/network";
+import { Frontend } from "./frontend";
 
 type OpenCallback<T> = {
     id: T;
@@ -77,6 +78,11 @@ export class BackendConnection {
         this.state = {
             ownItems: res.ownItems
         };
+
+        try {
+            Frontend.getFrontend().dashboard!.forceUpdate();
+        } catch(e) {}
+        
         return this.state;
     }
 
