@@ -78,7 +78,7 @@ export class AddRessourceModal extends React.Component<{
             <button type="button" className="btn btn-success" disabled={this.state.isInserting}
             onClick={() => {
                 this.onSubmitClick();
-            }} key="modFtBtn1">{fe.lang.ACTION_ADD} {this.state.isInserting ? <BtnLoadingSpinner /> : ""}</button>,
+            }} key="modFtBtn1">{this.props.existingItem ? fe.lang.ACTION_EDIT : fe.lang.ACTION_ADD} {this.state.isInserting ? <BtnLoadingSpinner /> : ""}</button>,
             <button type="button" className="btn btn-secondary" disabled={this.state.isInserting}
             onClick={() => {
                 this.props.dashboard.showModal(CurrentDashboardModal.None);
