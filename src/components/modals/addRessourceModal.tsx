@@ -9,34 +9,20 @@ export class AddRessourceModal extends React.Component<{
     dashboard: Dashboard,
     existingItem?: MedRessource
 }, {
-    ressource_title: string,
-    ressource_amount: number,
-    ressource_pzn: number,
-    ressource_description: string,
     isInserting: boolean
 }> {
+
+    titleElement?: HTMLInputElement;
+    amountElement?: HTMLInputElement;
+    pznElement?: HTMLInputElement;
+    descriptionElement?: HTMLTextAreaElement;
 
     constructor(props) {
         super(props);
 
-        if(!this.props.existingItem)
-            this.state = { 
-                isInserting: false,
-                ressource_amount: -1,
-                ressource_pzn: -1,
-                ressource_title: "",
-                ressource_description: ""
-            };
-        else {
-            let i = this.props.existingItem;
-            this.state = {
-                isInserting: false,
-                ressource_amount: i.amount,
-                ressource_description: i.description,
-                ressource_pzn: i.pzn,
-                ressource_title: i.title
-            };
-        }
+        this.state = { 
+            isInserting: false
+        };
     }
 
     render() {
@@ -50,7 +36,7 @@ export class AddRessourceModal extends React.Component<{
                     <div className="col-sm-9">
                         <input type="text" className="form-control" disabled={this.state.isInserting}
                             id="inputTitle" placeholder={fe.lang.ADDRESSOURCE_TITLE_PLH} 
-                            onChange={(evt) => {this.setState({ ressource_title: evt.target.value })}}
+                            ref={(el) => this.titleElement = el!}
                             value={this.props.existingItem?.title} />
                     </div>
                 </div>
@@ -59,7 +45,7 @@ export class AddRessourceModal extends React.Component<{
                     <div className="col-sm-4">
                         <input type="number" className="form-control" disabled={this.state.isInserting}
                             id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_AMOUNT_PLH}
-                            onChange={(evt) => {this.setState({ ressource_amount: parseInt(evt.target.value) })}}
+                            ref={(el) => this.amountElement = el!}
                             value={this.props.existingItem?.amount} />
                     </div>
                 </div>
@@ -67,8 +53,8 @@ export class AddRessourceModal extends React.Component<{
                     <label className="col-sm-3 col-form-label">{fe.lang.PZN}</label>
                     <div className="col-sm-4">
                         <input type="text" className="form-control" disabled={this.state.isInserting}
-                            id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_PZN_PLH}
-                            onChange={(evt) => {this.setState({ ressource_pzn: parseInt(evt.target.value) })}}
+                            id="pznAmount" placeholder={fe.lang.ADDRESSOURCE_PZN_PLH}
+                            ref={(el) => this.pznElement = el!}
                             value={this.props.existingItem?.pzn} />
                     </div>
                 </div>
@@ -77,7 +63,7 @@ export class AddRessourceModal extends React.Component<{
                     <div className="col-sm-9">
                         <textarea className="form-control" rows={6} disabled={this.state.isInserting}
                             id="inputDescription" placeholder={fe.lang.ADDRESSOURCE_DESCRIPTION_PLH} 
-                            onChange={(evt) => {this.setState({ ressource_description: evt.target.value })}}
+                            ref={(el) => this.descriptionElement = el!}
                             value={this.props.existingItem?.description} />
                     </div>
                 </div>
@@ -102,12 +88,12 @@ export class AddRessourceModal extends React.Component<{
 
     async onSubmitClick() {
         let newMedRessource: MedRessource = {
-            amount: this.state.ressource_amount,
-            description: this.state.ressource_description,
+            amount: parseInt(this.amountElement!.value),
+            description: this.descriptionElement!.value,
             owner: null as any,
-            title: this.state.ressource_title,
+            title: this.titleElement!.value,
             uuid: uuidv4(),
-            pzn: this.state.ressource_pzn
+            pzn: parseInt(this.pznElement!.value)
         };
 
         let fe = Frontend.getFrontend();
