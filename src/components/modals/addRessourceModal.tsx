@@ -17,6 +17,8 @@ export class AddRessourceModal extends React.Component<{
     pznElement?: HTMLInputElement;
     descriptionElement?: HTMLTextAreaElement;
 
+    isFirstRender = true;
+
     constructor(props) {
         super(props);
 
@@ -27,6 +29,8 @@ export class AddRessourceModal extends React.Component<{
 
     render() {
         let fe = Frontend.getFrontend();
+        let wasFirstRender = this.isFirstRender;
+        this.isFirstRender = false;
 
         return <Modal dashboard={this.props.dashboard} 
             title={this.props.existingItem ? fe.lang.EDIT_RESSOURCE : fe.lang.PROVIDE_RESSOURCE} footer={this.renderFooter()}>
@@ -37,7 +41,7 @@ export class AddRessourceModal extends React.Component<{
                         <input type="text" className="form-control" disabled={this.state.isInserting}
                             id="inputTitle" placeholder={fe.lang.ADDRESSOURCE_TITLE_PLH} 
                             ref={(el) => this.titleElement = el!}
-                            value={this.props.existingItem?.title} />
+                            value={wasFirstRender ? this.props.existingItem?.title : undefined} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -46,7 +50,7 @@ export class AddRessourceModal extends React.Component<{
                         <input type="number" className="form-control" disabled={this.state.isInserting}
                             id="inputAmount" placeholder={fe.lang.ADDRESSOURCE_AMOUNT_PLH}
                             ref={(el) => this.amountElement = el!}
-                            value={this.props.existingItem?.amount} />
+                            value={wasFirstRender ? this.props.existingItem?.amount : undefined} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -55,7 +59,7 @@ export class AddRessourceModal extends React.Component<{
                         <input type="text" className="form-control" disabled={this.state.isInserting}
                             id="pznAmount" placeholder={fe.lang.ADDRESSOURCE_PZN_PLH}
                             ref={(el) => this.pznElement = el!}
-                            value={this.props.existingItem?.pzn} />
+                            value={wasFirstRender ? this.props.existingItem?.pzn : undefined} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -64,7 +68,7 @@ export class AddRessourceModal extends React.Component<{
                         <textarea className="form-control" rows={6} disabled={this.state.isInserting}
                             id="inputDescription" placeholder={fe.lang.ADDRESSOURCE_DESCRIPTION_PLH} 
                             ref={(el) => this.descriptionElement = el!}
-                            value={this.props.existingItem?.description} />
+                            value={wasFirstRender ? this.props.existingItem?.description : undefined} />
                     </div>
                 </div>
             </form>
