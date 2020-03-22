@@ -31,6 +31,7 @@
     "ACTION_REMOVE": "Remove",
     "ACTION_ALLOW": "Allow",
     "ACTION_DENY": "Deny",
+    "ACTION_REQUEST": "Request",
 
     "REMOVE_RESSOURCE_QUESTION_LEFT": "Should the ressource ",
     "REMOVE_RESSOURCE_QUESTION_RIGHT": " really be deleted?",

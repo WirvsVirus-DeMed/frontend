@@ -33,6 +33,9 @@ export interface LanguageDescription {
     ACTION_REMOVE: string;
     ACTION_ALLOW: string;
     ACTION_DENY: string;
+    ACTION_REQUEST: string;
+    
+    SENT_REQUEST: string;
 
     REMOVE_RESSOURCE_QUESTION_LEFT: string;
     REMOVE_RESSOURCE_QUESTION_RIGHT: string;
@@ -40,4 +43,6 @@ export interface LanguageDescription {
     NOTIFICATION_MEDREQ_TITLE: string;
     NOTIFICATION_MEDREQ_DESCR: string;
     NOTIFICATION_MEDREQ_QUEST: string;
+
+    OWN_RESSOURCES: string;
 }

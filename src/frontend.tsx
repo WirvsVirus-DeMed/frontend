@@ -9,7 +9,7 @@ import { Dashboard } from "./components/pages/dashboard";
 
 export const P2P_DEFAULT_PORT = 4040;
 
-export const DEBUG_MANUAL_BE_CON = false;
+export const DEBUG_MANUAL_BE_CON = true;
 
 export class Frontend {
 

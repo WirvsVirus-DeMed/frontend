@@ -52,7 +52,7 @@ export class RessourceList extends React.Component<{
                     this.editRessourceButton(item),
                     this.deleteRessourceButton(item)
                 ] : [
-
+                    this.requestRessourceButton(item)
                 ]
             }</td>
         </tr>;
@@ -67,14 +67,36 @@ export class RessourceList extends React.Component<{
 
     deleteRessourceButton(item: MedRessource) {
         let fe = Frontend.getFrontend();
-        return <button key="delbtn" type="button" className="btn btn-primary btn-xs" onClick={() => {
+        return <button key="delbtn" type="button" className="btn btn-warning btn-xs" onClick={() => {
             this.props.dashboard.showModal(CurrentDashboardModal.RemoveRessource, item);
         }}>{fe.lang.ACTION_REMOVE}</button>;
     }
 
-    /*requestRessourceButton() {
+    requestRessourceButton(item: MedRessource) {
         let fe = Frontend.getFrontend();
-        return <button key="reqbtn" type="button"></button>
-    }*/
+
+        let usedElement: HTMLElement | null;
+        return <button key="reqbtn" type="button" className="btn btn-primary btn-xs" 
+                ref={(el) => {usedElement = el}} onClick={(ev) => {
+            this.requestRessource(item, usedElement as HTMLButtonElement);
+        }}>{fe.lang.ACTION_REQUEST}</button>
+    }
+
+    async requestRessource(item: MedRessource, btn: HTMLButtonElement) {
+        let fe = Frontend.getFrontend();
+        btn.disabled = true;
+        delay(1000);
+        btn.disabled = false;
+        btn.innerHTML = fe.lang.SENT_REQUEST;
+        this.props.dashboard.showModal(CurrentDashboardModal.None, item);
+    }
     
+}
+
+async function delay(timeout: number) {
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            res();
+        }, timeout);
+    });
 }

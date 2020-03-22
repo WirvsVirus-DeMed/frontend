@@ -14,7 +14,6 @@ export interface MedRessource {
     amount: number;
     pzn: number;
     description: string;
-    createdAt: Date;
     owner: PeerInformation;
 }
 

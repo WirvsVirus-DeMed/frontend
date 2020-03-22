@@ -103,7 +103,6 @@ export class AddRessourceModal extends React.Component<{
     async onSubmitClick() {
         let newMedRessource: MedRessource = {
             amount: this.state.ressource_amount,
-            createdAt: new Date(),
             description: this.state.ressource_description,
             owner: null as any,
             title: this.state.ressource_title,
@@ -121,7 +120,6 @@ export class AddRessourceModal extends React.Component<{
             
         } else {
 
-            newMedRessource.createdAt = this.props.existingItem.createdAt;
             let req = new ChangeMedRessourceRequest(this.props.existingItem.uuid, false, newMedRessource);
             let res = await fe.backend.transceive<ChangeMedRessourceResponse>(req);
 

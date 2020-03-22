@@ -39,7 +39,7 @@ export class Dashboard extends React.Component<{}, {
                 this.showModal(CurrentDashboardModal.SearchRessource);
             }}>{fe.lang.SEARCH_FOR_RESSOURCE}</button>
             
-            <h5>Eigene Ressourcen</h5>
+            <h5>{fe.lang.OWN_RESSOURCES}</h5>
             <RessourceList ownerIsItself={true} dashboard={this} 
                 items={fe.backend.state.ownItems} />
 
